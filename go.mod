@@ -1,5 +1,8 @@
-module foodSubscription
+module github.com/Luthor9269/foodSubscription.git
 
 go 1.21.3
 
-require github.com/brianvoe/gofakeit v3.18.0+incompatible
+require (
+	github.com/joho/godotenv v1.5.1
+	github.com/lib/pq v1.10.9
+)

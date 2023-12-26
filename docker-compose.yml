@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  db:
+    image: postgres  # Using PostgreSQL version 13, but you can choose another version if needed
+    ports:
+      - "5432:5432"    # Map PostgreSQL port
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: foodSubscription
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:

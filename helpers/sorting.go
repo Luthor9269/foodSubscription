@@ -11,6 +11,12 @@ type Restaurant struct {
 	WeightedScore float64
 }
 
+const (
+	distanceWeight   = 0.4
+	ratingWeight     = 0.3
+	priceStarsWeight = 0.3
+)
+
 func SortByWeightedScore(restaurants []Restaurant) {
 	maxDistance, maxRating, maxPriceStars := getMaxEverything(restaurants)
 
@@ -22,10 +28,6 @@ func SortByWeightedScore(restaurants []Restaurant) {
 }
 
 func GetWeightedScore(restaurant Restaurant, maxDistance, maxRating, maxPriceStars float64) float64 {
-	distanceWeight := 0.4
-	ratingWeight := 0.3
-	priceStarsWeight := 0.3
-
 	var weightedScore float64
 	weightedScore += distanceWeight * (1 - restaurant.Distance/maxDistance)
 	weightedScore += ratingWeight * (restaurant.Rating / maxRating)

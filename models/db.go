@@ -39,5 +39,6 @@ func ConnectToDB() *sql.DB {
 		fmt.Println("Error connecting to the DB", err)
 	}
 	initTables(db)
+	seedingData(db)
 	return db
 }

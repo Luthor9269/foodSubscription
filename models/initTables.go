@@ -26,25 +26,14 @@ func initTables(db *sql.DB) error {
 	`
 
 	var createRestaurantTable = `
-	CREATE TABLE IF NOT EXISTS restaurant(
-		id SERIAL PRIMARY KEY,
-    	cuisines INT[],
-    	address VARCHAR(255) NOT NULL,
-		openingTime TIMESTAMP NOT NULL,
-		closingTime TIMESTAMP NOT NULL,
-		restaurantName VARCHAR(255) NOT NULL
-	);
-	`
-
-	var createRestaurantItemsTable = `
-	CREATE TABLE IF NOT EXISTS restaurantItems(
-		id SERIAL PRIMARY KEY,
-    	itemDescription VARCHAR(255) NOT NULL,
-    	itemName VARCHAR(255) NOT NULL,
-		price FLOAT NOT NULL,
-		tags INT[],
-		restaurantid INT REFERENCES restaurant(id) NOT NULL
-	);
+	CREATE TABLE IF NOT EXISTS restaurants(
+    id SERIAL PRIMARY KEY,
+    unique_id VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    operating_hours VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    items JSON NOT NULL
+);
 	`
 
 	var createPreferenceTable = `
@@ -86,11 +75,6 @@ func initTables(db *sql.DB) error {
 	_, err = db.Exec(createRestaurantTable)
 	if err != nil {
 		fmt.Println("Error adding restaurant table")
-		log.Fatalln(err)
-	}
-	_, err = db.Exec(createRestaurantItemsTable)
-	if err != nil {
-		fmt.Println("Error adding RestaurantItems table")
 		log.Fatalln(err)
 	}
 	_, err = db.Exec(createPreferenceTable)

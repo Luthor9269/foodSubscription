@@ -22,6 +22,7 @@ type Item struct {
 	Name        string
 	Price       float64
 	Description string
+	ImageURL    string
 }
 
 func seedingData(db *sql.DB) error {
@@ -100,6 +101,11 @@ func generateItems(numItems int) []Item {
 		"Pho", "Lasagna", "Grilled Cheese", "Hamburger", "Fish and Chips",
 		"Mashed Potatoes", "Fajitas", "Beef Stroganoff", "Chicken Tikka Masala", "Cobb Salad",
 	}
+	imageURLs := map[string]string{
+		"Pizza":  "./images/pizza.png",
+		"Burger": "./images/hamburger.png",
+	}
+
 	descriptions := []string{
 		"A classic dish with a perfect blend of flavors and textures",
 		"Juicy and flavorful, guaranteed to satisfy your cravings",
@@ -132,14 +138,20 @@ func generateItems(numItems int) []Item {
 		"Zesty and refreshing, a burst of flavor in every bite",
 		"A delicious fusion of [cuisine] and [cuisine], a unique culinary experience",
 	}
+
+	//imageFolder := "../images/"
+
 	items := make([]Item, numItems)
 	for i := 0; i < numItems; i++ {
 		// Generate a random number between 0 and 29
 		randomNumber := rand.Intn(30)
+		foodName := foodNames[randomNumber]
+		//imagePath := imageFolder + foodName + ".png" // Assuming image file names match food names
 		items[i] = Item{
-			Name:        fmt.Sprintf(foodNames[randomNumber]),
+			Name:        fmt.Sprintf(foodName),
 			Price:       float64(randomNumber) * 2.5,
 			Description: fmt.Sprintf(descriptions[randomNumber]),
+			ImageURL:    imageURLs[foodName],
 		}
 	}
 	return items

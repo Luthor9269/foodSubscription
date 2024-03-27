@@ -1,48 +1,29 @@
 package routers
 
 import (
-	"encoding/json"
+	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
-	"net/http"
-	"os"
 )
 
-func SetupRouter() {
+func SetupRouter(db *sql.DB) {
+	router := gin.Default()
+
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %s", err)
 	}
-	username := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	dbname := os.Getenv("DB_NAME")
-
-	router := gin.Default()
-
-	router.Use(func(c *gin.Context) {
-		// Set DB credentials in the Gin context
-		c.Set("db_username", username)
-		c.Set("db_password", password)
-		c.Set("db_name", dbname)
-		c.Next()
-	})
-	router.GET("/", trialHandler)
-	//router.GET("/restaurant-item/{itemId}", GetRestaurantItemsHandler)
-	router.GET("/playlist", temporaryHandler)
-	router.DELETE("/restaurant-item/{itemId}")
-	router.POST("/preference")
+	router.GET("/restaurant-items", GetRestaurantItemsHandler(db))
+	router.POST("/preference", PostPreferences(db))
+	//
 
 	err = router.Run("localhost:8080")
 	fmt.Println("router up")
 	if err != nil {
 		return
 	}
-}
-
-func trialHandler(c *gin.Context) {
-	fmt.Println("In trial /")
 }
 
 type Playlist struct {
@@ -53,25 +34,4 @@ type Playlist struct {
 	DeliveryDays   []int
 	ItemIDs        []string
 	IsPlaying      bool
-}
-
-func temporaryHandler(c *gin.Context) {
-	playlist := Playlist{
-		PlaylistID:     1,
-		PreferenceID:   1,
-		PlaylistName:   "My Playlist",
-		DeliveryTiming: "12:00 PM",
-		DeliveryDays:   []int{1, 3, 5},
-		ItemIDs:        []string{"item1", "item2", "item3"},
-		IsPlaying:      true,
-	}
-
-	// Convert to JSON
-	jsonData, err := json.Marshal(playlist)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	fmt.Println(jsonData)
-	c.IndentedJSON(http.StatusOK, jsonData)
 }

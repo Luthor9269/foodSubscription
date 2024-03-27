@@ -10,5 +10,4 @@ type PreferencesTable struct {
 	MinRestaurantRating float32 `json:"minRestaurantRating"`
 	SpecialInstructions string  `json:"specialInstructions"`
 	Restrictions        []int   `json:"restrictions"`
-	Tags                []int   `json:"tags"`
 }

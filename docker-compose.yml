@@ -6,10 +6,6 @@ services:
     ports:
       - "5432:5432"    # Map PostgreSQL port
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: foodSubscription
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: P@ssw0rdISTD7
+      POSTGRES_DB: foodsubscription

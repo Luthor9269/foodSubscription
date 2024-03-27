@@ -17,7 +17,6 @@ func SetupRouter(db *sql.DB) {
 	}
 	router.GET("/restaurant-items", GetRestaurantItemsHandler(db))
 	router.POST("/preference", PostPreferences(db))
-	//
 
 	err = router.Run("localhost:8080")
 	fmt.Println("router up")

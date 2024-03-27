@@ -39,14 +39,13 @@ func initTables(db *sql.DB) error {
 	var createPreferenceTable = `
 	CREATE TABLE IF NOT EXISTS preferences(
 		id SERIAL PRIMARY KEY,
-		userid INT REFERENCES users(id),
+		userid INT,
 		cuisine INT[],
 		minBudget FLOAT,
 		maxBudget FLOAT,
 		minRestaurantRating FLOAT,
 		specialInstructions VARCHAR(255),
-		restrictions INT[],
-		tags INT[]
+		restrictions INT[]
 	)
 	`
 

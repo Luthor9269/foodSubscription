@@ -6,6 +6,7 @@ import (
 	"fmt"
 	databaseConnection "github.com/Luthor9269/foodSubscription.git/models"
 	"github.com/gin-gonic/gin"
+	"github.com/lib/pq"
 	"net/http"
 )
 
@@ -66,8 +67,13 @@ func PostPreferences(db *sql.DB) func(c *gin.Context) {
 			return
 		}
 
-		_, err := db.Exec("INSERT INTO preferences (userid, cuisine, minBudget, maxBudget, minRestaurantRating, specialInstructions, restrictions, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-			preferences.UserId, preferences.Cuisine, preferences.MinBudget, preferences.MaxBudget, preferences.MinRestaurantRating, preferences.SpecialInstructions, preferences.Restrictions, preferences.Tags)
+		_, err := db.Exec(`
+	INSERT INTO preferences 
+	(userid, cuisine, minBudget, maxBudget, minRestaurantRating, specialInstructions, restrictions) 
+	VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+			preferences.UserId, pq.Array(preferences.Cuisine), preferences.MinBudget,
+			preferences.MaxBudget, preferences.MinRestaurantRating, preferences.SpecialInstructions,
+			pq.Array(preferences.Restrictions))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func SetupRouter(res http.ResponseWriter, req *http.Request) {
+func SetupRouter() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %s", err)
@@ -28,16 +28,21 @@ func SetupRouter(res http.ResponseWriter, req *http.Request) {
 		c.Set("db_name", dbname)
 		c.Next()
 	})
-
-	router.GET("/restaurant-item/{itemId}", GetRestaurantItemsHandler)
+	router.GET("/", trialHandler)
+	//router.GET("/restaurant-item/{itemId}", GetRestaurantItemsHandler)
 	router.GET("/playlist", temporaryHandler)
 	router.DELETE("/restaurant-item/{itemId}")
 	router.POST("/preference")
 
 	err = router.Run("localhost:8080")
+	fmt.Println("router up")
 	if err != nil {
 		return
 	}
+}
+
+func trialHandler(c *gin.Context) {
+	fmt.Println("In trial /")
 }
 
 type Playlist struct {
@@ -67,5 +72,6 @@ func temporaryHandler(c *gin.Context) {
 		fmt.Println("Error:", err)
 		return
 	}
+	fmt.Println(jsonData)
 	c.IndentedJSON(http.StatusOK, jsonData)
 }

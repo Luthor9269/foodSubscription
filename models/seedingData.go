@@ -102,11 +102,12 @@ func generateItems(numItems int) []Item {
 		"Mashed Potatoes", "Fajitas", "Beef Stroganoff", "Chicken Tikka Masala", "Cobb Salad",
 	}
 	imageURLs := map[string]string{
-		"Pizza":   "../images/pizza.png",
-		"Burger":  "../images/hamburger.png",
-		"Sushi":   "../images/fruits.png",
-		"Ramen":   "../images/provolone.png",
-		"Lasagna": "../images/provolone.png",
+		"Pizza":           "../images/pizza.png",
+		"Burger":          "../images/hamburger.png",
+		"Sushi":           "../images/fruits.png",
+		"Ramen":           "../images/provolone.png",
+		"Lasagna":         "../images/provolone.png",
+		"Mashed Potatoes": "../images/fruits.png",
 	}
 
 	descriptions := []string{

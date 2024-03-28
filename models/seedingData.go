@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	_ "github.com/lib/pq"
 	"log"
 	"math/rand"
+
+	_ "github.com/lib/pq"
 )
 
 type Restaurant struct {
@@ -169,7 +170,7 @@ func generateItems(numItems int) []Item {
 	items := make([]Item, numItems)
 	for i := 0; i < numItems; i++ {
 		// Generate a random number between 0 and 29
-		randomNumber := rand.Intn(30)
+		randomNumber := rand.Intn(25)
 		foodName := foodNames[randomNumber]
 		//imagePath := imageFolder + foodName + ".png" // Assuming image file names match food names
 		items[i] = Item{
